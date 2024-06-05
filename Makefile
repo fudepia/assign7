@@ -24,9 +24,11 @@ OBJ_DIR	:= obj
 # You may not need to modify anything below
 
 # define the Cpp compiler to use
-CXX = g++
+#CXX = g++
+CXX = clang++
 # define any compile-time flags
 CXXFLAGS	:= -std=c++17 -Wall -Wno-unused-variable -g
+CXXFLAGS += -Wall -Wextra -fsanitize=address -fno-omit-frame-pointer
 
 ifeq ($(OS),Windows_NT)
 MAIN	:= $(PACKAGE).exe
