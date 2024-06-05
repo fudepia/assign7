@@ -3,13 +3,10 @@
 #include "../../functions/AnsiPrint/AnsiPrint.h"
 
 // read data to the Room class
-Room::Room(RoomData data) {
-    this->roomID = data.id;
-    this->roomName = data.name;
-    this->roomDescription = data.description;
-
-    this->playerInitialPosition = data.playerInitialPosition;
-
+Room::Room(RoomData data):roomID(data.id), roomName(data.name), roomDescription(data.description), playerInitialPosition(data.playerInitialPosition), enemies(std::move(data.enemies)) {
+	//memcpy(&defaultRoomObjectMap[0][0],
+	//		&data.defaultRoomObjectMap[0][0],
+	//		GAME_WINDOW_SIZE_Y*GAME_WINDOW_SIZE_X*sizeof(data.defaultRoomObjectMap[0][0]));
     for(auto enemy : data.enemies) {
         this->enemies.push_back(enemy);
     }
@@ -20,10 +17,27 @@ Room::Room(RoomData data) {
         }
     }
 }
-
+Room::~Room() {
+    for(auto &i:enemies) delete i;
+}
 // add your code to implement the Room class here
 
 
+bool Room::walkable(Position p) {
+	switch(defaultRoomObjectMap[p.getY()][p.getX()]) {
+		case OBJECT_NONE:
+		case OBJECT_DOOR:
+		case OBJECT_GRASS:
+			return true;
+		case OBJECT_WALL:
+		case OBJECT_ROCK:
+		case OBJECT_WATER:
+			return false;
+	}
+	return true;
+}
+
+const std::vector<Enemy*>& Room::getEnemies() { return enemies; }
 
 
 

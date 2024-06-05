@@ -6,10 +6,11 @@
 class Slime: public Enemy {
 public:
     Slime(Position initialPosition);
-    ~Slime();
+    ~Slime() override;
     
     // Complete the Slime class with reference to the Enemy class.
-
+    Position nextPosition() override;
+    void render() override;
 
 
 

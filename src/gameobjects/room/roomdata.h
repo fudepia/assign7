@@ -103,6 +103,8 @@ const RoomData ROOM_DATA[] = {
     }
 };
 
+const size_t ROOM_DATA_SZ = sizeof(ROOM_DATA)/sizeof(ROOM_DATA[0]);
+
 /*
 
 default room object map:
