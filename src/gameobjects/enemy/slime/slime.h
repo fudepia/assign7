@@ -12,6 +12,7 @@ public:
     Position nextPosition() override;
     void render() override;
 
+    void move(GameState::InputState action) override;
 
 
 

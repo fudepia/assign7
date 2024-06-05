@@ -21,7 +21,7 @@ Controller::Controller() {
 
     state=PROCESS_MOVEMENT; //?
     player=new Player(rooms[defaultRoomIndex]->playerInitialPosition);
-    currentProcess = new Move(player, room); //?
+    currentProcess = new Move(player, rooms[defaultRoomIndex]); //?
 }
 
 Controller::~Controller() {
@@ -29,7 +29,7 @@ Controller::~Controller() {
 	for(const auto&[i,p]:rooms) delete p;
 }
 
-RunningState Controller::run(InputState action) {
+RunningState Controller::run(InputState s) {
 
     if(state == PROCESS_GAMEOVER) {
         return EXIT;
@@ -39,7 +39,7 @@ RunningState Controller::run(InputState action) {
         return EXIT;
     }
 
-    ProcessInfo info = currentProcess->run(action);
+    ProcessInfo info = currentProcess->run(s);
 
     // add your code to implement process control
 
@@ -71,7 +71,7 @@ RunningState Controller::run(InputState action) {
                                                    } break;
                                }
                            }break;
-        case ACTION_CONFIRN: {
+        case ACTION_CONFIRM: {
                              }break;
         case ACTION_PAUSE: {
                            }break;
