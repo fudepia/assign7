@@ -18,7 +18,7 @@ using namespace GameProcess;
 class Controller {
 private:
     std::map<int, Room *> rooms;
-    int currentRoomIndex;
+    int currentRoomIndex=0;
 
     Player *player;
 

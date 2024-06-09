@@ -8,13 +8,13 @@ class GameObject {
 private:
     Position position;
 
-    int health;
     int maxHealth;
 
     std::string name;
 
     int attack;
 public:
+    int health;
     GameObject(Position initialPosition, int maxHealth, int attack, std::string name);
 
     virtual ~GameObject();

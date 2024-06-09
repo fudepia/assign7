@@ -37,7 +37,7 @@ bool Room::walkable(Position p) {
 	return true;
 }
 
-const std::vector<Enemy*>& Room::getEnemies() { return enemies; }
+std::vector<Enemy*>& Room::getEnemies() { return enemies; }
 
 
 

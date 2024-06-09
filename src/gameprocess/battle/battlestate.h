@@ -4,7 +4,7 @@
 namespace BattleState
 {
     enum BattlePhase {
-        ACTION_SELECTING,
+        ACTION_SELECTING=0,
         TURN_END,
         ENEMY_DEAD,
         PLAYER_DEAD
@@ -18,10 +18,11 @@ namespace BattleState
     };
 
     enum BattleAction {
-        FORCE_ATTACK,
+        FORCE_ATTACK=0,
         ATTACK,
         DEFEND,
-        HEAL
+        HEAL,
+        BattleActionCount
     };
 
     const int BATTLE_ACTION_COUNT_PLAYER = 4;

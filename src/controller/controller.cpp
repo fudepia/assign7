@@ -21,7 +21,7 @@ Controller::Controller() {
 
     state=PROCESS_MOVEMENT; //?
     player=new Player(rooms[defaultRoomIndex]->playerInitialPosition);
-    currentProcess = new Move(player, rooms[defaultRoomIndex]); //?
+    currentProcess = new Move(player, rooms[currentRoomIndex]);
 }
 
 Controller::~Controller() {
@@ -40,79 +40,51 @@ RunningState Controller::run(InputState s) {
     }
 
     ProcessInfo info = currentProcess->run(s);
-
-    // add your code to implement process control
-
-
-    switch (state) {
-    case PROCESS_MOVEMENT: {
-    switch(s) {
-        case ACTION_NONE: {}break;
-        case ACTION_UP:
-        case ACTION_DOWN:
-        case ACTION_LEFT:
-        case ACTION_RIGHT: {
-                               auto orig=player->getPosition();
-                               switch(player->move(s,
-                                           [&](Position pos) { return rooms[currentRoomIndex]->walkable(pos); } // check lambda
-                                      )) {
-                                   case MOVE:
-                                       break;
-                                   case LEFTROOM: {
-                                        --currentRoomIndex;
-                                        if(currentRoomIndex<0) currentRoomIndex+=rooms.size();
-                                            player->setPosition(Position{34, player->getPosition().getY()});
-                                                  } break;
-                                   case RIGHTROOM: {
-                                        ++currentRoomIndex;
-                                        if((size_t)currentRoomIndex>=rooms.size()) currentRoomIndex-=rooms.size();
-                                            std::cerr << "next\n"<<currentRoomIndex;
-                                            player->setPosition(Position{0, player->getPosition().getY()});
-                                                   } break;
-                               }
-                           }break;
-        case ACTION_CONFIRM: {
-                             }break;
-        case ACTION_PAUSE: {
-                           }break;
-        case ACTION_EXIT: { return EXIT;
-                          }break;
-        case ACTION_INIT: {
-                          }break;
-    }
-        // add your code to implement the enemy movement
-    auto& room=rooms[currentRoomIndex];
-        for(auto &i:room->getEnemies()) {
-            auto newPos=i->nextPosition();
-            if(!(newPos==i->getPosition()))
-                if(room->walkable(newPos)) i->setPosition(newPos);
-        }
-
-        break;
+    switch(info) {
+        case MOVE_FINISH_ROOMCHANGE_LEFT:
+            --currentRoomIndex;
+            if(currentRoomIndex<0) currentRoomIndex+=rooms.size();
+            currentProcess = new Move(player, rooms[currentRoomIndex]);
+            break;
+        case MOVE_FINISH_ROOMCHANGE_RIGHT:
+            ++currentRoomIndex;
+            if((size_t)currentRoomIndex>=rooms.size()) currentRoomIndex-=rooms.size();
+            currentProcess = new Move(player, rooms[currentRoomIndex]);
+            break;
+        case MOVE_FINISH_PAUSE:
+            currentProcess = new Pause();
+            break;
+        case PAUSE_FINISH:
+            currentProcess = new Move(player, rooms[currentRoomIndex]);
+            break;
+        case MOVE_FINISH_BATTLE:
+            if(rooms[currentRoomIndex]->encounteredE!=nullptr)
+            currentProcess = new Battle(player, rooms[currentRoomIndex]->encounteredE);
+            break;
+        case BATTLE_FINISH_PLAYER_WIN:
+            if(rooms[currentRoomIndex]->encounteredE->isLastBoss()) {
+                currentProcess = new GameClear();
+                if(s==ACTION_CONFIRM) state=PROCESS_GAMECLEAR;
+                break;
+            }
+            (rooms[currentRoomIndex]->getEnemies()).erase(std::remove((rooms[currentRoomIndex]->getEnemies()).begin(), (rooms[currentRoomIndex]->getEnemies()).end(), rooms[currentRoomIndex]->encounteredE), (rooms[currentRoomIndex]->getEnemies()).end());
+            rooms[currentRoomIndex]->encounteredE=nullptr;
+            currentProcess = new Move(player, rooms[currentRoomIndex]);
+            break;
+        case BATTLE_FINISH_PLAYER_DEAD:
+            currentProcess = new GameOver();
+            if(s==ACTION_CONFIRM) state=PROCESS_GAMEOVER;
+            break;
+        case CONTINUE:
+            break;
     }
 
-    default:
-        break;
-    }
     this->render();
 
     return PLAY;
 }
 
 // Add your code to implement the Controller class here.
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // render

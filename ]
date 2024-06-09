@@ -12,10 +12,8 @@ Pause::~Pause()=default;
 ProcessInfo Pause::run(InputState s) {
     switch(s) {
         case ACTION_INIT:
-            return CONTINUE;
+            break;
         default:
-            return PAUSE_FINISH;
-    }
 }
 
 

@@ -14,12 +14,23 @@ public:
 
     void move(GameState::InputState action) override;
 
-
-
-
-
-
-
+    template<typename T>
+    void move(GameState::InputState s, T f) {
+        return;
+        auto newPos=getPosition();
+        switch(rand()%4) {
+            case 0:
+                newPos.incrX(); break;
+            case 1:
+                newPos.incrY(); break;
+            case 2:
+                newPos.decrX(); break;
+            case 3:
+                newPos.decrY(); break;
+        }
+        if(f(newPos)) setPosition(newPos);
+        return;
+    }
 
 
 };

@@ -1,5 +1,6 @@
 #include "dragon.h"
 #include <stdlib.h>
+#include<cassert>
 
 #include "../../../functions/AnsiPrint/AnsiPrint.h"
 
@@ -15,7 +16,9 @@ Position Dragon::nextPosition() {
 
 
 
-
+void Dragon::move(GameState::InputState s) {
+    assert(false);
+}
 
 
 

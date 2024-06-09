@@ -25,6 +25,7 @@ class Room {
         RoomObject defaultRoomObjectMap[GAME_WINDOW_SIZE_Y][GAME_WINDOW_SIZE_X];
 
     public:
+        Enemy* encounteredE;
         Room(RoomData roomData);
         ~Room();
 
@@ -32,7 +33,7 @@ class Room {
 
         void destroyEnemy(Enemy *enemy);
 
-        const std::vector<Enemy *> & getEnemies();
+        std::vector<Enemy *> & getEnemies();
 
         void render(Position position);
 };

@@ -13,18 +13,19 @@ private:
 
     BattlePhase state;
 
-    BattleAction actionPlayerSelected;
-    BattleAction actionEnemySelected;
+    BattleAction actionPlayerSelected=BattleAction(0);
+    BattleAction actionEnemySelected=BattleAction(0);
 
     // Please store the damage calculation result in this variable. 
     // The damage will be displayed based on this variable when rendering.
-    int damageToPlayer;
-    int damageToEnemy;
+    int damageToPlayer=0;
+    int damageToEnemy=0;
 
     static int damageCalculate(BattleAction attackerAction, BattleAction targetAction, int damage);
 
     static std::string BattleActionToString(BattleAction action);
     
+    bool damageDealt=false;
 public:
     Battle(Player* player, Enemy* enemy);
     ~Battle();

@@ -4,7 +4,7 @@
 
 // Add your code to implement the GameObject class here.
 
-GameObject::GameObject(Position iP, int mH, int atk, std::string n): position(iP), maxHealth(mH), name(n), attack(atk) {}
+GameObject::GameObject(Position iP, int mH, int atk, std::string n): position(iP), maxHealth(mH), name(n), attack(atk), health(mH) {}
 GameObject::~GameObject() = default;
 
 Position GameObject::getPosition() { return position; }
@@ -14,3 +14,5 @@ int GameObject::getMaxHealth() { return maxHealth; }
 int GameObject::getHealth() { return health; }
 
 std::string GameObject::getName() { return name; }
+
+int GameObject::getAttack() { return attack; }

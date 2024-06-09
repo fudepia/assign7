@@ -9,8 +9,6 @@ Player::Player(Position initialPosition): GameObject(initialPosition, 20, 2, "Pl
 }
 
 // Add your code to implement the Player class here.
-static constexpr int Preset_maxHealth=10;
-static constexpr int Preset_attack=10;
 Player::~Player() = default;
 
 MoveState Player::move(GameState::InputState s) {
@@ -41,7 +39,7 @@ MoveState Player::move(GameState::InputState s) {
 }
 
 
-
+int Player::getHealPower() { return healPower; }
 
 
 

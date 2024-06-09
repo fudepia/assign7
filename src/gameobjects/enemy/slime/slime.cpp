@@ -1,5 +1,6 @@
 #include "slime.h"
 #include <stdlib.h>
+#include<cassert>
 
 #include "../../../functions/AnsiPrint/AnsiPrint.h"
 
@@ -29,8 +30,9 @@ Position Slime::nextPosition() {
 
 
 
-
-
+void Slime::move(GameState::InputState s) {
+    assert(false);
+}
 
 
 
