@@ -12,7 +12,7 @@ Battle::Battle(Player* p, Enemy* e):player(p), enemy(e), state(ACTION_SELECTING)
 Battle::~Battle() = default;
 
 ProcessInfo Battle::run(InputState s) {
-    std::cerr << "enemy: "<<enemy<<std::endl;
+
     switch(state) {
     case ACTION_SELECTING: {
         damageToPlayer=0, damageToEnemy=0, damageDealt=false;
@@ -34,7 +34,7 @@ ProcessInfo Battle::run(InputState s) {
         return CONTINUE;
     }
     case TURN_END: {
-                       std::cerr << "(TURN_END) s="<<s<<std::endl;
+
         if(!damageDealt) {
             player->health-=damageToPlayer;
             enemy->health-=damageToEnemy;
@@ -45,7 +45,7 @@ ProcessInfo Battle::run(InputState s) {
             damageDealt=true;
         }
         if(s==ACTION_CONFIRM) {
-            std::cerr << "turn_end confirm\n";
+
             if(player->health<=0) {
                 state=PLAYER_DEAD;
                 return CONTINUE;
@@ -57,19 +57,19 @@ ProcessInfo Battle::run(InputState s) {
             state=ACTION_SELECTING;
             return CONTINUE;
         } else {
-            std::cerr << "Waiting...:\n" << player->health << std::endl << enemy->health << std::endl;
-            std::cerr << "Current state="<<state<<std::endl;
+
+
             return CONTINUE;
         }
         break;
     }
     default:
-                   std::cerr << "stae="<<s << std::endl;
+
         if(s==ACTION_CONFIRM)
             if(state==PLAYER_DEAD) return BATTLE_FINISH_PLAYER_DEAD;
             else /*if(state==ENEMY_DEAD)*/ return BATTLE_FINISH_PLAYER_WIN;
         else {
-            std::cerr << "Waiting...\n";
+
             return CONTINUE;
         }
         break;

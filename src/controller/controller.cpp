@@ -1,4 +1,5 @@
 #include <iostream>
+#include<algorithm>
 
 #include "controller.h"
 #include "../gameobjects/room/roomdata.h"

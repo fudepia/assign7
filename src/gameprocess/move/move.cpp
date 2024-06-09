@@ -29,7 +29,6 @@ ProcessInfo Move::run(InputState s) {
     }
     // add your code to implement the enemy movement
     for(auto &i:room->getEnemies()) {
-        std::cerr << "Updating..."<<i<<std::endl;
         //i->move(s, checkWalkable);
         if(player->getPosition()==i->getPosition()) {
             room->encounteredE=i;
